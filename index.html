@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>DarkShop — Premium Store</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Home Page -->
+        <div id="page-home" class="page active">
+            <div class="app-header">
+                <h1> Dark Shop</h1>
+                <div class="subtitle">Premium delivery service</div>
+            </div>
+            
+            <div class="glass-card">
+                <h3 class="text-center mb-16">🏙️ Choose delivery address</h3>
+                <div class="city-grid" id="cityGrid"></div>
+            </div>
+        </div>
+
+        <!-- Products Page -->
+        <div id="page-products" class="page">
+            <div class="app-header">
+                <h1>🛍️ Products</h1>
+                <div class="city-info-card">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="city-badge">
+                                📍 City: <span id="selectedCityText">London</span>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-secondary); font-size: 14px;">
+                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass-card">
+                <button class="city-change-btn" onclick="goToHome()">
+                    🏙️ Change city
+                </button>
+                <div id="categoriesContainer"></div>
+            </div>
+        </div>
+
+        <!-- Cart Page -->
+        <div id="page-cart" class="page">
+            <div class="app-header">
+                <h1>🛒Shopping cart</h1>
+                <div class="subtitle" id="cartCity">Город доставки: не выбран</div>
+            </div>
+            
+            <div class="glass-card">
+                <div id="cartList" class="cart-list"></div>
+                
+                <div class="mt-16">
+                    <div style="font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 8px;">
+                        Итого: <span id="totalGBP">0</span> £
+                    </div>
+                    <div class="text-muted text-center" id="totalConverted"></div>
+                    
+                    <div style="display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap;">
+                        <button class="btn danger" onclick="clearCart()" style="flex: 1;">
+                            🗑 Очистить
+                        </button>
+                        <button class="btn primary" onclick="openPayModal()" style="flex: 2;">
+                            💳 Оплатить
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Check Page -->
+        <div id="page-payment-check" class="page">
+            <div class="status-page">
+                <div class="status-icon">⏳</div>
+                <div class="status-title">Проверяем платеж</div>
+                <div class="status-message" id="paymentStatusMessage">
+                    Ожидаем поступление средств на кошелек...
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                
+                <div class="live-logs" id="liveLogs">
+                    <div class="log-entry">
+                        <span class="log-time" id="currentTime"></span>
+                        <span class="log-info">🚀 Запуск системы проверки платежей...</span>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <button class="btn primary" onclick="checkPaymentStatus()">
+                        🔄 Проверить снова
+                    </button>
+                    <button class="btn secondary" onclick="openPage('page-home')" style="margin-top: 12px;">
+                        На главную
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Success Page -->
+        <div id="page-payment-success" class="page">
+            <div class="status-page">
+                <div class="status-icon">🎉</div>
+                <div class="status-title">Оплата подтверждена!</div>
+                <div class="status-message">
+                    ✅ <strong>Ваш заказ успешно оплачен и принят в обработку!</strong>
+                </div>
+                
+                <div class="glass-card" style="text-align: left;">
+                    <h3 style="margin-bottom: 16px; color: var(--primary);">Детали заказа</h3>
+                    <div id="orderItemsList"></div>
+                    <div style="display: flex; justify-content: space-between; padding: 16px 0; font-weight: 800; font-size: 18px; border-top: 2px solid var(--border); margin-top: 8px;">
+                        <span>Итого:</span>
+                        <span id="orderTotalAmount">0 £</span>
+                    </div>
+                </div>
+                
+                <div class="glass-card" style="text-align: left; margin-top: 16px;">
+                    <h4 style="margin-bottom: 12px; color: var(--success);">📦 Информация о доставке</h4>
+                    <div style="margin-bottom: 12px;">
+                        <strong>🏙 Город доставки:</strong><br>
+                        <span id="deliveryCity">—</span>
+                    </div>
+                    <div style="margin-bottom: 12px;">
+                        <strong>Теперь свяжитесь с поддержкой:</strong><br>
+                        <span>Напишите в личные сообщения и приложите скриншот Вашей транзакции и скриншот успешной оплаты - @Alinkamimka223</span>
+                    </div>
+                </div>
+                
+                <button class="btn success" onclick="openPage('page-home')" style="margin-top: 24px;">
+                    🏠 На главную
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Cart -->
+    <div id="cartFloat" class="cart-float hidden">
+        <div>
+            <div style="font-weight: 800; font-size: 16px;">В корзине: <span id="cartCount">0</span> шт</div>
+            <div class="text-muted">Сумма: <span id="cartSum">0</span> £</div>
+        </div>
+        <button class="btn primary" onclick="openPage('page-cart')">
+            Открыть
+        </button>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="payModal" style="display: none;">
+        <div class="modal-back" id="modalBack">
+            <div class="modal">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div style="font-weight: 800; font-size: 20px;">💳 Оплата</div>
+                    <button onclick="closePayModal()" style="background: none; border: none; color: var(--text-secondary); font-size: 20px; cursor: pointer; padding: 4px;">✕</button>
+                </div>
+                
+                <div class="text-muted" style="margin-bottom: 16px;">Выберите валюту и сеть</div>
+                
+                <div class="currency-grid" id="currencyList"></div>
+                
+                <div style="margin: 20px 0;">
+                    <div class="text-muted" style="margin-bottom: 8px;">Сеть:</div>
+                    <div class="network-buttons" id="networkButtons"></div>
+                </div>
+                
+                <div id="manualPayment">
+                    <div style="background: var(--bg-secondary); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
+                        <div class="text-muted">Сумма к оплате:</div>
+                        <div style="font-weight: 800; font-size: 18px;" id="paySummary"></div>
+                    </div>
+                    
+                    <div class="text-muted">Адрес для перевода:</div>
+                    <div style="word-break: break-all; margin: 8px 0; background: var(--bg-primary); padding: 12px; border-radius: 8px; font-size: 12px; border: 1px solid var(--border);" id="walletAddr"></div>
+                    
+                    <button class="btn secondary" onclick="copyWallet()" style="width: 100%; margin-bottom: 12px;">
+                        📋 Копировать адрес
+                    </button>
+                    
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn success" onclick="payConfirmManual()" style="flex: 2;">
+                            ✅ Я оплатил
+                        </button>
+                        <button class="btn" onclick="closePayModal()" style="flex: 1;">
+                            Закрыть
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-item active" data-page="page-home" onclick="navTo(this)">
+            <div class="nav-icon">🏠</div>
+            <div>Главная</div>
+        </div>
+        <div class="nav-item" data-page="page-products" onclick="navTo(this)">
+            <div class="nav-icon">🛍</div>
+            <div>Товары</div>
+        </div>
+        <div class="nav-item" data-page="page-cart" onclick="navTo(this)">
+            <div class="nav-icon">🛒</div>
+            <div>Корзина</div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/payment.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
