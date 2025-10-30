@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>DarkShop — Premium Store</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link rel="stylesheet" href="css/style.css">
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width,initial-scale=1" />
+ <title>DarkShop — Premium Store</title>
+ <script src="https://telegram.org/js/telegram-web-app.js"></script>
+ <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <div class="container">
@@ -60,16 +60,16 @@
                 
                 <div class="mt-16">
                     <div style="font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 8px;">
-                        Итого: <span id="totalGBP">0</span> £
+                        Overall: <span id="totalGBP">0</span> £
                     </div>
                     <div class="text-muted text-center" id="totalConverted"></div>
                     
                     <div style="display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap;">
                         <button class="btn danger" onclick="clearCart()" style="flex: 1;">
-                            🗑 Очистить
+                            🗑 Clear
                         </button>
                         <button class="btn primary" onclick="openPayModal()" style="flex: 2;">
-                            💳 Оплатить
+                            💳 Pay
                         </button>
                     </div>
                 </div>
@@ -80,9 +80,9 @@
         <div id="page-payment-check" class="page">
             <div class="status-page">
                 <div class="status-icon">⏳</div>
-                <div class="status-title">Проверяем платеж</div>
+                <div class="status-title">Cheking payment</div>
                 <div class="status-message" id="paymentStatusMessage">
-                    Ожидаем поступление средств на кошелек...
+                    Waiting comformation for your payment ...
                 </div>
                 
                 <div class="progress-bar">
@@ -215,10 +215,10 @@
         </div>
     </div>
 
-    <script src="js/config.js"></script>
-    <script src="js/products.js"></script>
-    <script src="js/cart.js"></script>
-    <script src="js/payment.js"></script>
-    <script src="js/app.js"></script>
+<script src="./js/config.js"></script>
+<script src="./js/products.js"></script>
+<script src="./js/cart.js"></script>
+<script src="./js/payment.js"></script>
+<script src="./js/app.js"></script>
 </body>
 </html>
