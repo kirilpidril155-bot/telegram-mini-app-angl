@@ -19,9 +19,9 @@ function renderCart(){
     const list = document.getElementById('cartList');
     list.innerHTML = '';
     if (!selectedCity){
-        document.getElementById('cartCity').textContent = 'Город доставки: —';
+        document.getElementById('cartCity').textContent = 'Delivery city: —';
     } else {
-        document.getElementById('cartCity').textContent = 'Город доставки: ' + selectedCity;
+        document.getElementById('cartCity').textContent = 'Delivery city: ' + selectedCity;
     }
     if (cart.length===0) { 
         list.innerHTML = '<div class="text-center text-muted" style="padding: 40px;">Корзина пуста</div>'; 
@@ -43,7 +43,7 @@ function renderCart(){
         meta.innerHTML = `
             <div class="cart-item-name">${it.product}</div>
             <div class="cart-item-details">${it.color} • ${it.qty} g</div>
-            <div class="cart-item-details">Цена: ${it.priceGBP} £ • Кол-во: ${it.count}</div>
+            <div class="cart-item-details">Price: ${it.priceGBP} £ • Total: ${it.count}</div>
         `;
         
         const controls = document.createElement('div');

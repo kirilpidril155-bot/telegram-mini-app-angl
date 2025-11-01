@@ -21,8 +21,8 @@ function openPage(id){
 
 function selectCity(city){
     selectedCity = city;
-    document.getElementById('selectedCityText').textContent = 'Город: ' + city;
-    document.getElementById('cartCity').textContent = 'Город доставки: ' + city;
+    document.getElementById('selectedCityText').textContent = ' ' + city;
+    document.getElementById('cartCity').textContent = 'Delivery city: ' + city;
     openPage('page-products');
     document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
     document.querySelector('.nav-item[data-page="page-products"]').classList.add('active');

@@ -2,7 +2,7 @@
 function selectCity(city){
     selectedCity = city;
     document.getElementById('selectedCityText').textContent = city;
-    document.getElementById('cartCity').textContent = 'Город доставки: ' + city;
+    document.getElementById('cartCity').textContent = 'Delivery city: ' + city;
     openPage('page-products');
     document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
     document.querySelector('.nav-item[data-page="page-products"]').classList.add('active');
@@ -39,7 +39,7 @@ function renderCategories(){
             meta.className='product-info';
             meta.innerHTML = `
                 <div class="product-name">${color}</div>
-                <div class="product-description">Выберите количество и добавьте в корзину</div>
+                <div class="product-description">Select quantity and add to cart</div>
             `;
             
             const sel = document.createElement('div'); 
@@ -65,7 +65,7 @@ function renderCategories(){
             
             const addBtn = document.createElement('button'); 
             addBtn.className='add-btn'; 
-            addBtn.innerHTML = '🛒 Добавить';
+            addBtn.innerHTML = '🛒 Add';
             
             function updateDisplay(){
                 const q = grads[idx];
@@ -85,7 +85,7 @@ function renderCategories(){
                 const price = pKey ? custom_quantity_prices[pKey][q] : 0;
                 addToCart({product:prod, color:color, qty:q, priceGBP:price});
                 const oldText = addBtn.innerHTML;
-                addBtn.innerHTML = '✅ В корзине';
+                addBtn.innerHTML = '✅ In the cart';
                 addBtn.classList.add('in-cart');
                 setTimeout(()=>{ addBtn.innerHTML = oldText; addBtn.classList.remove('in-cart'); }, 1500);
             };

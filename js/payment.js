@@ -52,11 +52,11 @@ function updatePaymentSummary() {
 // 🔥 ФУНКЦИИ МОДАЛЬНОГО ОКНА ОПЛАТЫ
 function openPayModal() {
     if (cart.length === 0) { 
-        alert('Корзина пуста'); 
+        alert('The cart is empty'); 
         return; 
     }
     if (!selectedCity) { 
-        alert('Сначала выберите город'); 
+        alert('First, select a city'); 
         return; 
     }
     
@@ -91,16 +91,16 @@ function copyWallet(){
     const addr = document.getElementById('walletAddr').textContent;
     if (!addr) return;
     navigator.clipboard?.writeText(addr).then(()=>{ 
-        alert('Адрес скопирован в буфер') 
+        alert('The address has been copied to the clipboard.') 
     }).catch(()=>{ 
-        alert('Не удалось скопировать, скопируйте вручную') 
+        alert('Failed to copy, please copy manually') 
     });
 }
 
 // 🔥 РУЧНОЙ ПЕРЕВОД - ПЕРЕХОД НА ПРОВЕРКУ ПЛАТЕЖА
 function payConfirmManual() {
     if (!selectedCurrency || !selectedNetwork) {
-        alert('Сначала выберите валюту и сеть');
+        alert('First, select your currency and network.');
         return;
     }
 
@@ -125,7 +125,7 @@ function payConfirmManual() {
         timestamp: new Date().toISOString()
     };
 
-    addLog(`💳 Начинаем проверку платежа: ${currentPaymentData.totalConverted} ${currentPaymentData.currency}`, 'info');
+    addLog(`💳 We are starting payment verification: ${currentPaymentData.totalConverted} ${currentPaymentData.currency}`, 'info');
     
     closePayModal();
     openPage('page-payment-check');
@@ -171,7 +171,7 @@ function clearLogs() {
     document.getElementById('liveLogs').innerHTML = `
         <div class="log-entry">
             <span class="log-time" id="currentTime"></span>
-            <span class="log-info">🚀 Запуск системы проверки платежей...</span>
+            <span class="log-info">🚀 Launch of the payment verification system...</span>
         </div>
     `;
 }
@@ -180,14 +180,14 @@ function clearLogs() {
 async function getWalletTransactions(walletAddress, apiUrl, apiKey, currency, network) {
     const config = networkConfigs[currency][network];
     
-    addLog(`🔗 Запрашиваем транзакции через Alchemy API...`, 'info');
-    addLog(`👛 Кошелек: ${walletAddress.substring(0, 10)}...`, 'info');
+    addLog(`🔗 Requesting transactions via the Alchemy API...`, 'info');
+    addLog(`👛 Wallet: ${walletAddress.substring(0, 10)}...`, 'info');
     
     try {
         let body;
         
         if (config.type === 'erc20') {
-            addLog(`🎯 Ищем ${currency} (ERC-20) транзакции...`, 'info');
+            addLog(`🎯 Search ${currency} (ERC-20) transactions...`, 'info');
             body = {
                 id: 1,
                 jsonrpc: "2.0",
@@ -205,7 +205,7 @@ async function getWalletTransactions(walletAddress, apiUrl, apiKey, currency, ne
                 }]
             };
         } else if (network === "Ethereum") {
-            addLog(`🎯 Ищем нативные транзакции ETH через улучшенный метод...`, 'info');
+            addLog(`🎯 Finding Native ETH Transactions Using an Improved Method...`, 'info');
             body = {
                 id: 1,
                 jsonrpc: "2.0",
@@ -221,7 +221,7 @@ async function getWalletTransactions(walletAddress, apiUrl, apiKey, currency, ne
                 }]
             };
         } else if (network === "Solana") {
-            addLog(`🎯 Используем Solana API...`, 'info');
+            addLog(`🎯 Use Solana API...`, 'info');
             const solanaUrl = `${apiUrl}/${apiKey}`;
             
             const response = await fetch(solanaUrl, {
@@ -249,7 +249,7 @@ async function getWalletTransactions(walletAddress, apiUrl, apiKey, currency, ne
             const data = await response.json();
             
             if (data.result) {
-                addLog(`✅ Найдено Solana транзакций: ${data.result.length}`, 'success');
+                addLog(`✅ Solana transactions found: ${data.result.length}`, 'success');
                 
                 const transactions = [];
                 for (const tx of data.result.slice(0, 5)) {
@@ -265,7 +265,7 @@ async function getWalletTransactions(walletAddress, apiUrl, apiKey, currency, ne
                             });
                         }
                     } catch (error) {
-                        addLog(`⚠️ Ошибка получения деталей Solana TX: ${error.message}`, 'warning');
+                        addLog(`⚠️ Error receiving details Solana TX: ${error.message}`, 'warning');
                     }
                 }
                 return transactions;
@@ -275,7 +275,7 @@ async function getWalletTransactions(walletAddress, apiUrl, apiKey, currency, ne
         
         if (body) {
             const url = `${apiUrl}/${apiKey}`;
-            addLog(`🌐 Отправляем запрос к Alchemy API: ${url.substring(0, 50)}...`, 'info');
+            addLog(`🌐 We send a request to Alchemy API: ${url.substring(0, 50)}...`, 'info');
             
             const response = await fetch(url, {
                 method: 'POST',
@@ -293,7 +293,7 @@ async function getWalletTransactions(walletAddress, apiUrl, apiKey, currency, ne
             
             if (data.result && data.result.transfers) {
                 const transfers = data.result.transfers;
-                addLog(`✅ Найдено транзакций: ${transfers.length}`, 'success');
+                addLog(`✅ Transactions found: ${transfers.length}`, 'success');
                 
                 transfers.forEach((transfer, index) => {
                     const amount = transfer.value || (transfer.rawContract && transfer.rawContract.value) || '0';
@@ -312,24 +312,24 @@ async function getWalletTransactions(walletAddress, apiUrl, apiKey, currency, ne
                 return convertedTransactions;
                 
             } else if (data.error) {
-                addLog(`❌ Ошибка Alchemy API: ${data.error.message}`, 'error');
+                addLog(`❌ Error Alchemy API: ${data.error.message}`, 'error');
                 return [];
             } else {
-                addLog(`⚠️ Неизвестный ответ от API`, 'warning');
+                addLog(`⚠️ Unknown response from API`, 'warning');
                 return [];
             }
         }
         
     } catch (error) {
-        addLog(`💥 Ошибка сети: ${error.message}`, 'error');
-        addLog(`⚠️ Временно используем тестовые данные для отладки...`, 'warning');
+        addLog(`💥 Network error: ${error.message}`, 'error');
+        addLog(`⚠️ We temporarily use test data for debugging...`, 'warning');
         return getMockTransactions(currency, network);
     }
 }
 
 // 🔥 МОК ДАННЫЕ ДЛЯ ТЕСТИРОВАНИЯ
 function getMockTransactions(currency, network) {
-    addLog(`🎯 Используем тестовые данные для ${currency}...`, 'warning');
+    addLog(`🎯 We use test data for ${currency}...`, 'warning');
     
     const mockTx = {
         hash: '0x' + Math.random().toString(16).substring(2, 66),
@@ -339,7 +339,7 @@ function getMockTransactions(currency, network) {
         tokenSymbol: currency
     };
     
-    addLog(`📄 Тестовая TX: ${mockTx.hash.substring(0, 15)}... | Сумма: ${currentPaymentData.totalConverted} ${currency}`, 'info');
+    addLog(`📄 Test TX: ${mockTx.hash.substring(0, 15)}... | Amount: ${currentPaymentData.totalConverted} ${currency}`, 'info');
     
     return [mockTx];
 }
@@ -368,7 +368,7 @@ async function getSolanaTransaction(signature, apiUrl, apiKey) {
         
         return await response.json();
     } catch (error) {
-        addLog(`❌ Ошибка получения Solana транзакции: ${error.message}`, 'error');
+        addLog(`❌ Error receiving Solana transaction: ${error.message}`, 'error');
         return null;
     }
 }
@@ -397,8 +397,8 @@ async function startPaymentChecking() {
         const progress = Math.min((checkCount / maxChecks) * 100, 90);
         progressFill.style.width = progress + '%';
         
-        statusMessage.innerHTML = `🔍 Проверяем транзакции... (${checkCount}/${maxChecks})`;
-        addLog(`🔄 Проверка #${checkCount} - сканируем блокчейн...`, 'info');
+        statusMessage.innerHTML = `🔍 Checking transactions... (${checkCount}/${maxChecks})`;
+        addLog(`🔄 Check #${checkCount} - scanning the blockchain...`, 'info');
         
         try {
             const paymentFound = await checkBlockchainForPayment();
@@ -406,9 +406,9 @@ async function startPaymentChecking() {
             if (paymentFound) {
                 clearInterval(paymentCheckInterval);
                 progressFill.style.width = '100%';
-                statusMessage.innerHTML = '✅ Платеж найден! Обрабатываем...';
-                addLog('🎉 ПЛАТЕЖ НАЙДЕН! Совпадение по сумме и адресу', 'success');
-                addLog(`📝 Хэш транзакции: ${currentPaymentData.txHash}`, 'success');
+                statusMessage.innerHTML = '✅ Payment found! Processing....';
+                addLog('🎉 PAYMENT FOUND! Match amount and address', 'success');
+                addLog(`📝 Transaction hash: ${currentPaymentData.txHash}`, 'success');
                 
                 setTimeout(() => {
                     showPaymentSuccess();
@@ -416,20 +416,20 @@ async function startPaymentChecking() {
                 
             } else if (checkCount >= maxChecks) {
                 clearInterval(paymentCheckInterval);
-                statusMessage.innerHTML = '⏰ Время проверки истекло. Если вы отправили платеж, он будет обработан вручную.';
-                addLog('⏰ Достигнут лимит проверок. Платеж не обнаружен.', 'warning');
+                statusMessage.innerHTML = '⏰ Verification timed out. If you submitted a payment, it will be processed manually..';
+                addLog('⏰ Verification limit reached. Payment not detected.', 'warning');
                 
                 setTimeout(() => {
-                    if (confirm('Автоматическая проверка завершена. Хотите проверить вручную или повторить проверку?')) {
+                    if (confirm('Automatic verification completed. Would you like to check manually or repeat the verification?')) {
                         checkPaymentStatus();
                     }
                 }, 1000);
             }
             
         } catch (error) {
-            console.error('Ошибка проверки платежа:', error);
-            addLog(`❌ Ошибка: ${error.message}`, 'error');
-            statusMessage.innerHTML = '❌ Ошибка проверки. Попробуйте снова.';
+            console.error('Payment verification error:', error);
+            addLog(`❌ Error: ${error.message}`, 'error');
+            statusMessage.innerHTML = '❌ Verification error. Please try again.';
         }
         
     }, 15000);
@@ -437,46 +437,46 @@ async function startPaymentChecking() {
 
 // 🔥 НЕМЕДЛЕННАЯ ПРОВЕРКА ПЛАТЕЖА
 async function checkPaymentStatusImmediately() {
-    addLog(`🚀 Немедленная проверка платежа...`, 'info');
+    addLog(`🚀 Immediate payment verification...`, 'info');
     try {
         const paymentFound = await checkBlockchainForPayment();
         if (paymentFound) {
             clearInterval(paymentCheckInterval);
             document.getElementById('progressFill').style.width = '100%';
-            document.getElementById('paymentStatusMessage').innerHTML = '✅ Платеж найден! Обрабатываем...';
-            addLog('🎉 ПЛАТЕЖ НАЙДЕН В ПЕРВОЙ ПРОВЕРКЕ!', 'success');
+            document.getElementById('paymentStatusMessage').innerHTML = '✅ Payment found! Processing...';
+            addLog('🎉 PAYMENT FOUND IN FIRST CHECK!', 'success');
             
             setTimeout(() => {
                 showPaymentSuccess();
             }, 2000);
         }
     } catch (error) {
-        addLog(`⚠️ Ошибка немедленной проверки: ${error.message}`, 'warning');
+        addLog(`⚠️ Immediate check error: ${error.message}`, 'warning');
     }
 }
 
 // 🔥 РУЧНАЯ ПРОВЕРКА СТАТУСА
 async function checkPaymentStatus() {
-    addLog(`🔍 Ручная проверка инициирована пользователем...`, 'info');
+    addLog(`🔍 Manual verification initiated by the user...`, 'info');
     try {
         const paymentFound = await checkBlockchainForPayment();
         
         if (paymentFound) {
             clearInterval(paymentCheckInterval);
             document.getElementById('progressFill').style.width = '100%';
-            document.getElementById('paymentStatusMessage').innerHTML = '✅ Платеж найден! Обрабатываем...';
-            addLog('🎉 ПЛАТЕЖ НАЙДЕН ПРИ РУЧНОЙ ПРОВЕРКЕ!', 'success');
+            document.getElementById('paymentStatusMessage').innerHTML = '✅ Payment found! Processing....';
+            addLog('🎉 PAYMENT FOUND DURING MANUAL CHECK!', 'success');
             
             setTimeout(() => {
                 showPaymentSuccess();
             }, 2000);
         } else {
-            addLog('❌ Платеж не найден при ручной проверке', 'warning');
-            alert('Платеж еще не обнаружен в блокчейне. Пожалуйста, подождите несколько минут и проверьте снова.');
+            addLog('❌ Payment not found during manual verification', 'warning');
+            alert('The payment has not yet been detected on the blockchain. Please wait a few minutes and check again.');
         }
     } catch (error) {
-        addLog(`❌ Ошибка ручной проверки: ${error.message}`, 'error');
-        alert('Ошибка при проверке платежа. Попробуйте позже.');
+        addLog(`❌ Manual verification error: ${error.message}`, 'error');
+        alert('Error verifying payment. Try again later.');
     }
 }
 
@@ -487,14 +487,14 @@ async function checkBlockchainForPayment() {
     const { wallet, totalConverted, currency, network, api_key, api_url } = currentPaymentData;
     const expectedAmount = parseFloat(totalConverted);
     
-    addLog(`🔍 Проверяем кошелек ${wallet.substring(0, 10)}...`, 'info');
-    addLog(`💰 Ожидаемая сумма: ${expectedAmount} ${currency}`, 'info');
-    addLog(`⏰ Время заказа: ${new Date(currentPaymentData.timestamp).toLocaleTimeString()}`, 'info');
+    addLog(`🔍 Checking your wallet ${wallet.substring(0, 10)}...`, 'info');
+    addLog(`💰 Expected amount: ${expectedAmount} ${currency}`, 'info');
+    addLog(`⏰ Order time: ${new Date(currentPaymentData.timestamp).toLocaleTimeString()}`, 'info');
     
     try {
         const transactions = await getWalletTransactions(wallet, api_url, api_key, currency, network);
         
-        addLog(`📊 Получено транзакций для анализа: ${transactions.length}`, 'info');
+        addLog(`📊 Transactions received for analysis: ${transactions.length}`, 'info');
         
         if (transactions && transactions.length > 0) {
             for (const tx of transactions) {
@@ -505,11 +505,11 @@ async function checkBlockchainForPayment() {
                 
                 const isRecent = network === "Solana" ? true : (txTime > orderTime - 300);
                 
-                addLog(`📄 Анализ TX: ${tx.hash?.substring(0, 15)}... | Сумма: ${txAmount} | Входящая: ${isIncoming} | Недавняя: ${isRecent}`, 'info');
+                addLog(`📄 Analysis TX: ${tx.hash?.substring(0, 15)}... | Amount: ${txAmount} | Incoming: ${isIncoming} | Recent: ${isRecent}`, 'info');
                 
                 if (isIncoming && isRecent) {
                     const amountMatch = isAmountMatch(txAmount, expectedAmount, currency, network);
-                    addLog(`🎯 Проверка суммы: ${amountMatch ? 'СОВПАДАЕТ' : 'НЕ СОВПАДАЕТ'}`, amountMatch ? 'success' : 'warning');
+                    addLog(`🎯 Checking the amount: ${amountMatch ? 'MATCHES' : 'DOES NOT MATCH'}`, amountMatch ? 'success' : 'warning');
                     
                     if (amountMatch) {
                         currentPaymentData.txHash = tx.hash;
@@ -520,11 +520,11 @@ async function checkBlockchainForPayment() {
             }
         }
         
-        addLog('❌ Подходящих транзакций не найдено', 'warning');
+        addLog('❌ No matching transactions found', 'warning');
         return false;
         
     } catch (error) {
-        addLog(`💥 Ошибка при проверке блокчейна: ${error.message}`, 'error');
+        addLog(`💥 Blockchain verification error: ${error.message}`, 'error');
         throw error;
     }
 }
@@ -546,15 +546,15 @@ function isAmountMatch(txAmount, expectedAmount, currency, network) {
     const minAmount = expectedAmount * (1 - tolerance);
     const maxAmount = expectedAmount * (1 + tolerance);
     
-    addLog(`📏 Проверка: ${normalizedTxAmount.toFixed(8)} vs ${expectedAmount} (допуск: ${tolerance*100}%)`, 'info');
-    addLog(`📏 Диапазон принятия: ${minAmount.toFixed(8)} - ${maxAmount.toFixed(8)}`, 'info');
+    addLog(`📏 Test: ${normalizedTxAmount.toFixed(8)} vs ${expectedAmount} (admission: ${tolerance*100}%)`, 'info');
+    addLog(`📏 Acceptance range: ${minAmount.toFixed(8)} - ${maxAmount.toFixed(8)}`, 'info');
     
     const result = normalizedTxAmount >= minAmount && normalizedTxAmount <= maxAmount;
     
     if (result) {
-        addLog(`✅ Сумма совпадает! Получено: ${normalizedTxAmount.toFixed(8)} ${currency}`, 'success');
+        addLog(`✅ The amount matches! Received: ${normalizedTxAmount.toFixed(8)} ${currency}`, 'success');
     } else {
-        addLog(`❌ Сумма не совпадает. Получено: ${normalizedTxAmount.toFixed(8)} ${currency}, ожидалось: ${expectedAmount} ${currency}`, 'warning');
+        addLog(`❌ The amount does not match. Received: ${normalizedTxAmount.toFixed(8)} ${currency}, expected: ${expectedAmount} ${currency}`, 'warning');
     }
     
     return result;

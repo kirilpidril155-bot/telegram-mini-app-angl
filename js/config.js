@@ -70,7 +70,7 @@ const submenus = {
     "🍄💊PSYHODELIC & HALLUCINOGENS💊🍄": ["💊LSD💊", "🍄Muschrooms🍄", "👽DMT👽"],
     "🌈🔥EMPATHOGENS🔥🌈": ["🌈Ecstasy🌈", "💊Molly💊", "🔥Mephedrone🔥"],
     "😮 💨VAPE THC😮 💨": ["🍏Sour Apple  Bubble🍏", "🍓🥭Strawberry Mango Haze🍓🥭", "🌴Hawaiian Saxpot Gelato🌴", "🍓Jedimind fuck🍓", "🍋Cheetah Piss🍋", "🍇Purple Barnie🍇", "💜Grandaddy Pluto💜"],
-    "🔥WEEKLY DEALS🔥": ["🍫HASH 14g -30%🍫", "🎁Different Sort 6x3.5🎁", "🇯🇲Rasta Starter Pack🇯🇲"]
+    "🔥WEEKLY DEALS🔥": ["🍫HASH 14g -30%🍫", "🎁Different Sort 6x3.5🎁", "🥦Rasta Starter Pack (vape+hush+edibles+2sorts🥦"]
 };
 
 const custom_quantity_prices = {
@@ -84,7 +84,7 @@ const custom_quantity_prices = {
     "🔥Mephedrone🔥": {1:35,3.5:75,7:140}, "🍏Sour Apple  Bubble🍏": {5:120}, "🍓🥭Strawberry Mango Haze🍓🥭": {5:120},
     "🌴Hawaiian Saxpot Gelato🌴": {5:120}, "🍓Jedimind fuck🍓": {2:80}, "🍋Cheetah Piss🍋": {2:80},
     "🍇Purple Barnie🍇": {2:80}, "💜Grandaddy Pluto💜": {2:80}, "🍫HASH 14g -30%🍫": {14:90},
-    "🎁Different Sort 6x3.5🎁": {21:150}, "🇯🇲Rasta Starter Pack🇯🇲": {19:170}
+    "🎁Different Sort 6x3.5🎁": {21:150}, "🥦Rasta Starter Pack (vape+hush+edibles+2sorts🥦": {19:170}
 };
 
 const product_images = {
@@ -99,9 +99,9 @@ const product_images = {
     "🥥Cocaine🥥": "https://i.postimg.cc/yNp2JwCL/High-Grade-Cocaine-91-Pure-1.webp",
     "🧊Meth🧊": "https://i.postimg.cc/hP8w8JqT/speed-white-powder-599x400-jpg.png",
     "❄️Ketamine❄️": "https://i.postimg.cc/rpDQHs7J/Ketamine-Powder-Indian-Isomer-EC-94-1536x2048-2.jpg",
-    "💊LSD💊": "https://i.postimg.cc/mgz9f923/IMG-20251001-143830-106.jpg",
+    "💊LSD💊": "https://i.postimg.cc/kMkrn37t/LSD-200ug-White-Fluff.png",
     "🍄Muschrooms🍄": "https://i.postimg.cc/fbWJW0M3/Buy-golden-teacher-mushroom-1.jpg",
-    "👽DMT👽": "https://i.postimg.cc/3RJJ7MC2/IMG-20251001-143834-526.jpg",
+    "👽DMT👽": "https://i.postimg.cc/RFkPzmwF/Ketamine-Powder-Indian-Isomer-EC-94-1536x2048-2-1.jpg",
     "🌈Ecstasy🌈": "https://i.postimg.cc/JnfrXyCc/flat750x1000075f-u2-1.jpg",
     "💊Molly💊": "https://i.postimg.cc/hPbDJPy8/blue-4.jpg",
     "🔥Mephedrone🔥": "https://i.postimg.cc/90PhqJpX/Mephedrone.jpg",
@@ -112,9 +112,9 @@ const product_images = {
     "🍋Cheetah Piss🍋": "https://i.postimg.cc/pTfWDWVv/cheetah-piss.png",
     "🍇Purple Barnie🍇": "https://i.postimg.cc/brYhk1F7/purple-barnie.png",
     "💜Grandaddy Pluto💜": "https://i.postimg.cc/59p11k6B/granddaddypluto.png",
-    "🍫HASH 14g -30%🍫": "https://i.postimg.cc/fRjDfrrQ/sexpot.png",
-    "🎁Different Sort 6x3.5🎁": "https://i.postimg.cc/fRjDfrrQ/sexpot.png",
-    "🇯🇲Rasta Starter Pack🇯🇲": "https://i.postimg.cc/fRjDfrrQ/sexpot.png",
+    "🍫HASH 14g -30%🍫": "https://i.postimg.cc/tC1QhR4F/Dark-Maroccian-hash.jpg",
+    "🎁Different Sort 6x3.5🎁": "https://i.postimg.cc/1z5RphnD/Screenshot-20251030-214824.png",
+    "🥦Rasta Starter Pack (vape+hush+edibles+2sorts🥦": "https://i.postimg.cc/c153ChzR/OIP.webp",
     // ... добавь картинки для всех товаров
 };
 
