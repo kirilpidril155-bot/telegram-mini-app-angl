@@ -65,7 +65,7 @@ const currencies = {
 
 // 🔥 ДАННЫЕ ТОВАРОВ
 const submenus = {
-    "🥦 WEED 🥦": ["🍍Pineapple Express hybrid THC20%🍍", "🍒Cherry Dawg sativa THC22%🍒", "💮Mimosa hybrid THC19%💮", "🍃RS11 hybrid THC24%🍃", "♥️Lust hybrid THC22%♥️", "🐘Purple Elephant indica THC22%🐘", "🍫Maracan HASH🍫", "🧁THC EDIBLES Gummies🧁"],
+    "🥦 WEED 🥦": ["🍍Pineapple Express hybrid THC20%🍍", "🍒Cherry Dawg sativa THC22%🍒", "💮Mimosa hybrid THC19%💮", "🍃RS11 hybrid THC24%🍃", "♥️Lust hybrid THC22%♥️", "🐘Purple Elephant indica THC22%🐘", "🍫Maracan HASH🍫", "🧁THC EDIBLES Gummies (1pack of 5pcs)🧁"],
     "❄️🧊🥥STIMULANTS🥥🧊❄️": ["🥥Cocaine🥥", "🧊Meth🧊", "❄️Ketamine❄️"],
     "🍄💊PSYHODELIC & HALLUCINOGENS💊🍄": ["💊LSD💊", "🍄Muschrooms🍄", "👽DMT👽"],
     "🌈🔥EMPATHOGENS🔥🌈": ["🌈Ecstasy (1g = 1pcs)🌈", "💊Molly (1g = 1pcs)💊", "🔥Mephedrone🔥"],
@@ -77,10 +77,10 @@ const custom_quantity_prices = {
     "🍍Pineapple Express hybrid THC20%🍍": {3.5:40,7:70,14:130}, "🍒Cherry Dawg sativa THC22%🍒": {3.5:30,7:55,14:100,28:180},
     "💮Mimosa hybrid THC19%💮": {3.5:25,7:45,14:80},
     "🍃RS11 hybrid THC24%🍃": {3.5:40,7:70,14:130}, "♥️Lust hybrid THC22%♥️": {3.5:40,7:70,14:130}, "🐘Purple Elephant indica THC22%🐘": {3.5:40,7:70,14:130},
-    "🍫Maracan HASH🍫": {3.5:40,7:80,14:120}, "🧁THC EDIBLES Gummies🧁": {0.5:50}, "🥥Cocaine🥥": {1:50,3.5:140,7:240},
+    "🍫Maracan HASH🍫": {3.5:40,7:80,14:120}, "🧁THC EDIBLES Gummies (1pack of 5pcs)🧁": {0.5:50}, "🥥Cocaine🥥": {1:50,3.5:140,7:240},
     "🧊Meth🧊": {3.5:17,7:30,14:55,28:90}, "❄️Ketamine❄️": {1:25,3.5:50,7:90,14:175},
     "💊LSD 💊": {5:42,10:78,25:175,50:300}, "🍄Muschrooms🍄": {3.5:40,7:70,14:130},
-    "👽DMT👽": {2.5:320,5:500,7.5:650}, "🌈Ecstasy (1g = 1pcs)🌈": {5:30,10:55,15:100,25:170}, "💊Molly (1g = 1pcs)💊": {1:28,3.5:55,7:100,14:180},
+    "👽DMT👽": {2.5:320,5:500,7.5:650}, "🌈Ecstasy (1g = 1pcs)🌈": {5:30,10:55,15:100,25:170}, "💊Molly (1g = 1pcs)💊": {5:30,10:55,15:100,25:170},
     "🔥Mephedrone🔥": {1:35,3.5:75,7:140}, "🍏Sour Apple  Bubble🍏": {5:120}, "🍓🥭Strawberry Mango Haze🍓🥭": {5:120},
     "🌴Hawaiian Saxpot Gelato🌴": {5:120}, "🍓Jedimind fuck🍓": {2:80}, "🍋Cheetah Piss🍋": {2:80},
     "🍇Purple Barnie🍇": {2:80}, "💜Grandaddy Pluto💜": {2:80}, "🍫HASH 14g -30%🍫": {14:90},
@@ -95,7 +95,7 @@ const product_images = {
     "♥️Lust hybrid THC22%♥️": "https://i.postimg.cc/HWzsSLmS/strain-11.png",
     "🐘Purple Elephant indica THC22%🐘": "https://i.postimg.cc/zvG5mn5G/strain-10.jpg",
     "🍫Maracan HASH🍫": "https://i.postimg.cc/tC1QhR4F/Dark-Maroccian-hash.jpg",
-    "🧁THC EDIBLES Gummies🧁": "https://i.postimg.cc/vTcjLXbg/cannabis-gummies-washington-ban-561000665.jpg",
+    "🧁THC EDIBLES Gummies (1pack of 5pcs)🧁": "https://i.postimg.cc/vTcjLXbg/cannabis-gummies-washington-ban-561000665.jpg",
     "🥥Cocaine🥥": "https://i.postimg.cc/yNp2JwCL/High-Grade-Cocaine-91-Pure-1.webp",
     "🧊Meth🧊": "https://i.postimg.cc/hP8w8JqT/speed-white-powder-599x400-jpg.png",
     "❄️Ketamine❄️": "https://i.postimg.cc/rpDQHs7J/Ketamine-Powder-Indian-Isomer-EC-94-1536x2048-2.jpg",
