@@ -24,7 +24,7 @@ function renderCart(){
         document.getElementById('cartCity').textContent = 'Delivery city: ' + selectedCity;
     }
     if (cart.length===0) { 
-        list.innerHTML = '<div class="text-center text-muted" style="padding: 40px;">Корзина пуста</div>'; 
+        list.innerHTML = '<div class="text-center text-muted" style="padding: 40px;">Cart empty</div>'; 
         document.getElementById('totalGBP').textContent = '0.00'; 
         document.getElementById('totalConverted').textContent = ''; 
         return; 
