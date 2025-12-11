@@ -1,13 +1,14 @@
 // 🔥 КРИПТОПЛАТЕЖИ
-function selectCurrency(cur) {
+function selectCurrency(cur, event) {
     selectedCurrency = cur;
     document.querySelectorAll('.currency-card').forEach(card => card.classList.remove('selected'));
     event.target.classList.add('selected');
     updateNetworkButtons(cur);
     updatePaymentSummary();
+    updateRateDisplay();
 }
 
-function selectNetwork(network) {
+function selectNetwork(network, event) {
     selectedNetwork = network;
     document.querySelectorAll('.network-btn').forEach(btn => btn.classList.remove('active'));
     event.target.classList.add('active');
@@ -24,7 +25,7 @@ function updateNetworkButtons(currency) {
             const btn = document.createElement('button');
             btn.className = 'network-btn';
             btn.textContent = network;
-            btn.onclick = () => selectNetwork(network);
+            btn.onclick = (e) => selectNetwork(network, e);
             networkButtons.appendChild(btn);
         });
         
@@ -44,9 +45,18 @@ function updatePaymentSummary() {
     const converted = totalGBP * rate;
     const config = networkConfigs[selectedCurrency][selectedNetwork];
     
-    const summary = `${converted.toFixed(6)} ${selectedCurrency} (${totalGBP.toFixed(2)} £)`;
+    // Форматируем сумму с учетом decimals
+    const decimals = config.decimals || 8;
+    const formattedConverted = converted.toFixed(decimals > 6 ? 6 : decimals);
+    
+    const summary = `${formattedConverted} ${selectedCurrency} (${totalGBP.toFixed(2)} £)`;
     document.getElementById('paySummary').textContent = summary;
-    document.getElementById('walletAddr').textContent = config.address;
+    
+    if (config.address) {
+        document.getElementById('walletAddr').textContent = config.address;
+    }
+    
+    updateRateDisplay();
 }
 
 // 🔥 ФУНКЦИИ МОДАЛЬНОГО ОКНА ОПЛАТЫ
@@ -81,6 +91,8 @@ function openPayModal() {
         updateNetworkButtons(selectedCurrency);
         currencyListEl.firstChild.classList.add('selected');
     }
+    
+    updateRateDisplay();
 }
 
 function closePayModal() { 
@@ -115,6 +127,7 @@ function payConfirmManual() {
         api_url: networkConfigs[selectedCurrency][selectedNetwork].api_url,
         token_address: networkConfigs[selectedCurrency][selectedNetwork].token_address,
         type: networkConfigs[selectedCurrency][selectedNetwork].type,
+        exchangeRate: currencies[selectedCurrency],
         items: cart.map(item => ({
             product: item.product,
             color: item.color,
@@ -172,6 +185,10 @@ async function startPaymentChecking() {
         <div class="log-entry">
             <span class="log-time" id="currentTime"></span>
             <span class="log-info">🚀 Payment verification has begun...</span>
+        </div>
+        <div class="log-entry">
+            <span class="log-time">${new Date().toLocaleTimeString()}</span>
+            <span class="log-info">💱 Использован курс: 1 GBP = ${currentPaymentData.exchangeRate} ${currentPaymentData.currency}</span>
         </div>
     `;
     
@@ -294,6 +311,26 @@ function showPaymentSuccess() {
     document.getElementById('orderTotalAmount').textContent = currentPaymentData.totalGBP + ' £';
     document.getElementById('deliveryCity').textContent = currentPaymentData.city;
     
+    // Добавляем информацию о курсе в детали заказа
+    const orderDetails = document.querySelector('#page-payment-success .glass-card:first-child');
+    if (orderDetails) {
+        const rateInfo = document.createElement('div');
+        rateInfo.className = 'rate-info-order';
+        rateInfo.style.cssText = `
+            margin-top: 12px;
+            padding: 8px 12px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        `;
+        rateInfo.innerHTML = `
+            <strong>Курс на момент оплаты:</strong> 1 GBP = ${currentPaymentData.exchangeRate} ${currentPaymentData.currency}<br>
+            <small>${new Date(currentPaymentData.timestamp).toLocaleString('ru-RU')}</small>
+        `;
+        orderDetails.appendChild(rateInfo);
+    }
+    
     openPage('page-payment-success');
     
     cart = [];
@@ -311,6 +348,7 @@ function saveOrderToHistory() {
         total: currentPaymentData.totalGBP,
         currency: currentPaymentData.currency,
         amount: currentPaymentData.totalConverted,
+        exchangeRate: currentPaymentData.exchangeRate,
         txHash: currentPaymentData.txHash || 'not_found',
         city: currentPaymentData.city,
         status: 'completed'
