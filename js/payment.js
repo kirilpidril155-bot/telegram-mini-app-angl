@@ -188,7 +188,7 @@ async function startPaymentChecking() {
         </div>
         <div class="log-entry">
             <span class="log-time">${new Date().toLocaleTimeString()}</span>
-            <span class="log-info">💱 Использован курс: 1 GBP = ${currentPaymentData.exchangeRate} ${currentPaymentData.currency}</span>
+            <span class="log-info">💱 The course was used: 1 GBP = ${currentPaymentData.exchangeRate} ${currentPaymentData.currency}</span>
         </div>
     `;
     
